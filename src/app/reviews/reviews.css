@@ -1,0 +1,227 @@
+.reviews-wrap {
+    margin-top: 2.5rem;
+    font-family: system-ui, -apple-system, sans-serif;
+    direction: ltr;
+  }
+  
+  .reviews-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+    padding-bottom: .75rem;
+    border-bottom: .5px solid var(--color-border-tertiary, #e5e7eb);
+  }
+  
+  .reviews-title {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  
+  .reviews-title h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-text-primary, #111);
+    margin: 0;
+  }
+  
+  .count {
+    font-size: 13px;
+    color: var(--color-text-tertiary, #9ca3af);
+  }
+  
+  .avg-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: #fef3c7;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #92400e;
+  }
+  
+  .star-icon {
+    color: #f59e0b;
+    font-size: 14px;
+  }
+  
+  /* Form Styles */
+  .review-form {
+    background: #f9fafb;
+    border: .5px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-heading {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-primary, #111);
+    margin-bottom: .75rem;
+  }
+  
+  .stars-row {
+    display: flex;
+    gap: 4px;
+    margin-bottom: .75rem;
+  }
+  
+  .stars-row i {
+    font-size: 24px;
+    cursor: pointer;
+    color: #d1d5db;
+    transition: color .12s;
+  }
+  
+  .stars-row i.active {
+    color: #f59e0b;
+  }
+  
+  .review-textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    font-size: 14px;
+    line-height: 1.6;
+    border: .5px solid #d1d5db;
+    border-radius: 8px;
+    background: #fff;
+    color: var(--color-text-primary, #111);
+    resize: vertical;
+    font-family: inherit;
+    margin-bottom: .75rem;
+  }
+  
+  .review-textarea:focus {
+    outline: none;
+    border-color: #6b7280;
+  }
+  
+  .form-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  
+  .error-msg { font-size: 13px; color: #dc2626; }
+  
+  .submit-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 18px;
+    background: #1a2744;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: auto;
+    transition: background .15s;
+  }
+  
+  .submit-btn:hover { background: #243460; }
+  .submit-btn:disabled { opacity: .6; cursor: not-allowed; }
+  
+  /* Review Cards */
+  .review-card {
+    border: .5px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: .75rem;
+    background: #fff;
+  }
+  
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: .75rem;
+  }
+  
+  .reviewer-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #dbeafe;
+    color: #1e40af;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  
+  .reviewer-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-primary, #111);
+    margin: 0 0 2px;
+  }
+  
+  .review-date {
+    font-size: 12px;
+    color: #9ca3af;
+    margin: 0;
+  }
+  
+  .card-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+  }
+  
+  .star-display i {
+    font-size: 14px;
+  }
+  
+  .card-actions {
+    display: flex;
+    gap: 4px;
+  }
+  
+  /* Minimalist Trash Bin Icon Button Styles */
+  .trash-btn {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+  
+  .trash-btn:hover {
+    background: #fee2e2;
+    color: #dc2626;
+  }
+  
+  .review-text {
+    font-size: 14px;
+    line-height: 1.65;
+    color: #4b5563;
+    margin: 0;
+  }
+  
+  .no-reviews {
+    text-align: center;
+    padding: 2rem;
+    color: #9ca3af;
+    font-size: 14px;
+  }

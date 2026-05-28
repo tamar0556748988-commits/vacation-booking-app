@@ -1,0 +1,152 @@
+<div class="add-room-page">
+
+    <div class="success-overlay" *ngIf="successMsg">
+      <div class="success-card">
+        <div class="success-icon">
+          <i class="ti ti-circle-check"></i>
+        </div>
+        <h2>Property Uploaded Successfully!</h2>
+        <p>Redirecting you to your new property page...</p>
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card">
+  
+      <div class="form-header">
+        <h2><i class="ti ti-home-plus"></i> Host Your Property</h2>
+        <p>Fill in the details — everything saves directly to the database</p>
+      </div>
+  
+      <div class="alert-error" *ngIf="errorMsg">
+        <i class="ti ti-alert-circle"></i> {{ errorMsg }}
+      </div>
+  
+      <div class="form-section">
+        <h3><i class="ti ti-info-circle"></i> Basic Info</h3>
+        <div class="form-grid">
+          <div class="input-group">
+            <label>Property Name</label>
+            <input type="text" [(ngModel)]="form.name" placeholder="e.g. Sunset Villa" />
+          </div>
+          <div class="input-group">
+            <label>Price per Night (₪)</label>
+            <input type="number" [(ngModel)]="form.price" placeholder="e.g. 800" />
+          </div>
+          
+          <div class="input-group">
+            <label>City</label>
+            <select [(ngModel)]="form.city">
+              <option value="">Select a city</option>
+              <optgroup *ngFor="let group of cityGroups" [label]="group.region">
+                <option *ngFor="let city of group.cities" [value]="city">{{ city }}</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label>Address</label>
+            <input type="text" [(ngModel)]="form.address" placeholder="e.g. 12 HaYarkon St" />
+          </div>
+          <div class="input-group full-width">
+            <label>Description</label>
+            <textarea rows="4" [(ngModel)]="form.description" placeholder="Describe the property..."></textarea>
+          </div>
+        </div>
+      </div>
+  
+      <div class="form-section">
+        <h3><i class="ti ti-users"></i> Capacity & Rooms</h3>
+        <div class="form-grid">
+          <div class="input-group">
+            <label>Max Guests</label>
+            <input type="number" [(ngModel)]="form.maxGuests" placeholder="e.g. 8" />
+          </div>
+          <div class="input-group">
+            <label>Bedrooms</label>
+            <input type="number" [(ngModel)]="form.bedrooms" placeholder="e.g. 3" />
+          </div>
+          <div class="input-group">
+            <label>Bathrooms</label>
+            <input type="number" [(ngModel)]="form.bathrooms" placeholder="e.g. 2" />
+          </div>
+  
+          <div class="input-group">
+            <label>Property Type</label>
+            <select [(ngModel)]="form.type" (ngModelChange)="onTypeChange()">
+              <option value="">Select type</option>
+              <option value="Villa">Villa</option>
+              <option value="Zimmer">Zimmer</option>
+              <option value="Apartment">Apartment</option>
+            </select>
+          </div>
+  
+          <div class="input-group" *ngIf="subCategories.length > 0">
+            <label>Sub Category</label>
+            <select [(ngModel)]="form.subCategory">
+              <option value="">Select sub category</option>
+              <option *ngFor="let sub of subCategories" [value]="sub">{{ sub }}</option>
+            </select>
+          </div>
+  
+        </div>
+      </div>
+  
+      <div class="form-section">
+        <h3><i class="ti ti-list-check"></i> Amenities</h3>
+        <div class="amenities-checkboxes">
+          <label class="checkbox-chip" *ngFor="let am of allAmenities">
+            <input type="checkbox"
+              [checked]="form.amenities.includes(am)"
+              (change)="toggleAmenity(am)" />
+            <i class="ti" [ngClass]="amenityIcon(am)"></i>
+            {{ am }}
+          </label>
+        </div>
+      </div>
+  
+      <div class="form-section">
+        <h3><i class="ti ti-photo"></i> Image URLs</h3>
+  
+        <div class="upload-box">
+          <label class="upload-label" for="fileInput">
+            <i class="ti ti-cloud-upload"></i>
+            <span>Click to upload an image from your computer</span>
+          </label>
+          <input id="fileInput" type="file" accept="image/*"
+                 (change)="uploadImage($event)"
+                 style="display:none" />
+          <div class="uploading-msg" *ngIf="uploading">
+            <i class="ti ti-loader"></i> Uploading...
+          </div>
+        </div>
+  
+        <div *ngFor="let img of form.images; let i = index" class="image-row">
+          <input type="text" [(ngModel)]="form.images[i]" placeholder="https://..." />
+          <button type="button" class="icon-btn remove" (click)="removeImage(i)">
+            <i class="ti ti-trash"></i>
+          </button>
+        </div>
+  
+        <button type="button" class="add-image-btn" (click)="addImageUrl()">
+          <i class="ti ti-plus"></i> Add Image URL
+        </button>
+  
+        <div class="image-previews" *ngIf="form.images.length > 0">
+          <ng-container *ngFor="let img of form.images">
+            <img *ngIf="img" [src]="img" class="preview-img" />
+          </ng-container>
+        </div>
+      </div>
+  
+      <div class="form-actions">
+        <button class="submit-btn" (click)="saveRoom()" [disabled]="saving">
+          <i class="ti ti-device-floppy"></i>
+          {{ saving ? 'Saving...' : 'Save Property' }}
+        </button>
+      </div>
+  
+    </div>
+  </div>

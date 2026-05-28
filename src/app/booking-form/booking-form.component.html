@@ -1,0 +1,112 @@
+<div class="booking-form-wrap">
+    <div class="steps">
+      <div class="step" [class.active]="step === 1" [class.done]="step > 1">
+        <div class="step-num"><span *ngIf="step === 1">1</span><span *ngIf="step > 1">✓</span></div>
+        <div class="step-label">Details</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step" [class.active]="step === 2" [class.done]="step > 2">
+        <div class="step-num"><span *ngIf="step <= 2">2</span><span *ngIf="step > 2">✓</span></div>
+        <div class="step-label">Payment</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step" [class.active]="step === 3">
+        <div class="step-num">3</div>
+        <div class="step-label">Confirmed</div>
+      </div>
+    </div>
+  
+    <div class="step-content" *ngIf="step === 1">
+      <h3>Guest Details</h3>
+  
+      <div class="form-group">
+        <label>FULL NAME</label>
+        <input type="text" [(ngModel)]="guestName" placeholder="Full Name">
+      </div>
+  
+      <div class="form-group">
+        <label>EMAIL ADDRESS (MUST MATCH ACCOUNT)</label>
+        <input type="email" [(ngModel)]="guestEmail" [class.input-error]="isEmailMismatch">
+        <span class="field-error" *ngIf="isEmailMismatch">
+          <i>⚠</i> Email must match your logged-in account.
+        </span>
+      </div>
+  
+      <div class="form-row">
+        <div class="form-group">
+          <label>CHECK IN</label>
+          <input type="date" [(ngModel)]="checkIn" [class.input-error]="isDateConflict">
+        </div>
+        <div class="form-group">
+          <label>CHECK OUT</label>
+          <input type="date" [(ngModel)]="checkOut" [class.input-error]="isDateConflict">
+        </div>
+      </div>
+      <span class="field-error" *ngIf="isDateConflict">
+        <i>⚠</i> These dates are already booked. Please choose different dates.
+      </span>
+  
+      <div class="form-row" style="margin-top: 16px;">
+        <div class="form-group">
+          <label>ADULTS</label>
+          <input type="number" [(ngModel)]="adults" min="1" [class.input-error]="isCapacityExceeded">
+        </div>
+        <div class="form-group">
+          <label>CHILDREN</label>
+          <input type="number" [(ngModel)]="children" min="0" [class.input-error]="isCapacityExceeded">
+        </div>
+      </div>
+      <span class="field-error" *ngIf="isCapacityExceeded">
+        <i>⚠</i> Max capacity is {{ room?.maxGuests }} guests.
+      </span>
+  
+      <div class="form-actions">
+        <button class="btn-cancel" (click)="goBack()">Cancel</button>
+        <button class="btn-next" (click)="nextStep()" [disabled]="!canContinue">Continue</button>
+      </div>
+    </div>
+  
+    <div class="step-content" *ngIf="step === 2">
+      <h3>Payment Details</h3>
+      <p style="font-size: 16px; margin-bottom: 24px; color: #1e293b;">Total Amount: ₪{{ room?.price || 0 }}</p>
+  
+      <span class="field-error" *ngIf="serverErrorMessage" style="display:block; margin-bottom: 16px;">
+        <i>⚠</i> {{ serverErrorMessage }}
+      </span>
+  
+      <div class="form-group">
+        <label>CARD NAME</label>
+        <input type="text" placeholder="Name on card">
+      </div>
+  
+      <div class="form-group">
+        <label>CARD NUMBER</label>
+        <input type="text" placeholder="0000 0000 0000 0000">
+      </div>
+  
+      <div class="form-row">
+        <div class="form-group">
+          <label>EXPIRY</label>
+          <input type="text" placeholder="MM/YY">
+        </div>
+        <div class="form-group">
+          <label>CVV</label>
+          <input type="password" placeholder="***">
+        </div>
+      </div>
+  
+      <div class="form-actions">
+        <button class="btn-cancel" (click)="step = 1">Back</button>
+        <button class="btn-next" (click)="submitBooking()" [disabled]="loading">
+          {{ loading ? 'Processing...' : 'Pay Now' }}
+        </button>
+      </div>
+    </div>
+  
+    <div class="step-content confirmation" *ngIf="step === 3" style="text-align: center; padding: 20px;">
+      <div class="success-icon" style="font-size: 64px; margin-bottom: 16px; color: #22c55e;">✅</div>
+      <h3 style="font-size: 24px; color: #1e293b; margin-bottom: 8px;">Booking Confirmed!</h3>
+      <p style="color: #64748b; font-size: 16px; margin-bottom: 32px;">Thank you, {{ guestName }}. Your booking was successful.</p>
+      <button class="btn-next" style="width: 100%;" (click)="goBack()">Close & Back to Room</button>
+    </div>
+  </div>

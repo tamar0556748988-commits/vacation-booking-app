@@ -1,0 +1,132 @@
+<div class="details-page">
+
+    <div *ngIf="loading" class="state-center">
+      <div class="spinner"></div>
+      <p>Loading...</p>
+    </div>
+  
+    <div *ngIf="error && !loading" class="state-center error">
+      <i class="ti ti-alert-circle" style="font-size:40px"></i>
+      <p>{{ error }}</p>
+      <button (click)="ngOnInit()">Try again</button>
+    </div>
+  
+    <ng-container *ngIf="room && !loading">
+  
+      <a class="back-link" routerLink="/rooms" [queryParams]="getCurrentParams()">
+        <i class="ti ti-arrow-left"></i> Back to Home
+      </a>
+  
+      <div class="gallery-wrap">
+        <div class="gallery-main">
+          <img [src]="getImageUrl(activeImage || displayImages[0])" [alt]="room.title || room.name" />
+          <div class="gallery-overlay"></div>
+          
+          <span class="gallery-tag" *ngIf="calculatedRating && calculatedRating > 0">
+            <i class="ti ti-star-filled"></i> {{ calculatedRating | number:'1.1-1' }}
+          </span>
+          
+          <span class="gallery-tag" *ngIf="!calculatedRating || calculatedRating === 0">
+            <i class="ti ti-sparkles"></i> New
+          </span>
+
+          <span class="availability-badge" *ngIf="isTaken">
+            <i class="ti ti-calendar-x"></i> Dates Taken
+          </span>
+        </div>
+  
+        <div class="gallery-thumbs" *ngIf="displayImages.length > 1">
+          <div
+            class="thumb"
+            *ngFor="let img of displayImages; let i = index"
+            [class.active]="activeImage === img || (!activeImage && i === 0)"
+            (click)="selectImage(i)">
+            <img [src]="getImageUrl(img)" [alt]="(room.title || room.name) + ' photo ' + (i+1)" />
+          </div>
+        </div>
+      </div>
+  
+      <div class="details-body">
+  
+        <div class="info-side">
+  
+          <span class="property-type-tag">
+            <i class="ti ti-map-pin"></i>
+            {{ room.location?.city || room.city || '' }}
+          </span>
+          <h1>{{ room.title || room.name }}</h1>
+          <div class="location-row">
+            <i class="ti ti-map-pin"></i>
+            <span>{{ room.location?.address || room.location?.city || room.city || '' }}</span>
+          </div>
+  
+          <div class="info-section">
+            <h3><i class="ti ti-home"></i> About this property</h3>
+            <p class="desc-text">{{ room.description }}</p>
+          </div>
+  
+          <div class="info-section" *ngIf="room.amenities && room.amenities.length > 0">
+            <h3><i class="ti ti-list-check"></i> What's included</h3>
+            <div class="amenities-grid">
+              <div class="amenity-chip" *ngFor="let am of room.amenities">
+                <i class="ti" [ngClass]="amenityIcon(am)"></i>
+                <span>{{ am }}</span>
+              </div>
+            </div>
+          </div>
+  
+          <div class="info-section reviews-section">
+            <h3><i class="ti ti-message-star"></i> Guest Reviews</h3>
+            <app-reviews 
+            [roomId]="room._id!" 
+            [currentUserId]="currentUser?._id"
+            (ratingCalculated)="onRatingCalculated($any($event))">
+          </app-reviews>
+          </div>
+  
+        </div>
+  
+        <div class="booking-card">
+          <div class="card-body">
+  
+            <div class="card-price-row">
+              <span class="card-price">
+                <i class="ti ti-currency-shekel"></i>{{ roomPrice }}
+              </span>
+              <span class="card-price-label">/ night</span>
+            </div>
+  
+            <div class="card-divider"></div>
+  
+            <div class="card-meta">
+              <span><i class="ti ti-users"></i> Up to {{ room.maxGuests }} guests</span>
+              <span *ngIf="room.bedrooms"><i class="ti ti-bed"></i> {{ room.bedrooms }} bedrooms</span>
+              <span><i class="ti ti-home-2"></i> {{ room.type || 'Villa' }}</span>
+            </div>
+  
+            <div class="card-divider"></div>
+  
+            <div class="taken-notice" *ngIf="isTaken">
+              <i class="ti ti-calendar-x"></i> These dates are unavailable
+            </div>
+  
+            <button
+              class="book-btn"
+              (click)="openBooking()"
+              [disabled]="isTaken">
+              <i class="ti ti-calendar-check"></i>
+              TO BOOK
+            </button>
+  
+            <p class="occupancy-note">
+              <i class="ti ti-shield-check"></i>
+              Free cancellation 48h before check-in
+            </p>
+  
+          </div>
+        </div>
+  
+      </div>
+  
+    </ng-container>
+  </div>

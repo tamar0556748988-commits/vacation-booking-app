@@ -1,0 +1,55 @@
+<div class="room-list-container">
+
+    <div class="navigation-header" *ngIf="searchSubCategory || searchCity || searchPropertyType">
+      <a class="back-link" (click)="goBackHome()">
+        <i class="ti ti-arrow-left"></i> Back to Home
+      </a>
+    </div>
+  
+    <div class="search-header">
+      <h2 *ngIf="searchCity">Results for: <span>{{ searchCity }}</span></h2>
+      <h2 *ngIf="!searchCity">{{ displayTitle }}</h2>
+      <p>{{ rooms.length }} properties found</p>
+    </div>
+  
+    <div class="loading" *ngIf="loading">
+      <div class="spinner"></div>
+      <p>Searching...</p>
+    </div>
+  
+    <div class="no-results" *ngIf="!loading && rooms.length === 0">
+      <h3>No properties found</h3>
+      <p>Try changing your search filters</p>
+    </div>
+  
+    <div class="rooms-grid" *ngIf="!loading && rooms.length > 0">
+      <div class="room-card" *ngFor="let room of rooms" (click)="goToRoom(room._id)">
+  
+        <div class="image-wrapper">
+          <img [src]="getImageUrl(room.images?.[0])"
+               [alt]="room.name"
+               (error)="onImgError($event)">
+          <span class="tag" *ngIf="room.amenities?.[0]">{{ room.amenities[0] }}</span>
+        </div>
+  
+        <div class="details">
+          <h3>{{ room.name }}</h3>
+          <p class="location">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+            {{ room.location?.city }}
+          </p>
+          <p class="description">{{ room.description | slice:0:80 }}...</p>
+          <div class="card-footer">
+            <div class="price">
+              <span class="amount">₪{{ room.price }}</span> / night
+            </div>
+            <span class="guests">👥 Up to {{ room.maxGuests }} guests</span>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  
+  </div>

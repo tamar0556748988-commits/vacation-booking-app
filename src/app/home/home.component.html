@@ -1,0 +1,105 @@
+<section class="hero-container" (click)="closeAll()">
+    <div class="hero-background" style="background-image: url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&q=80&w=2000')">
+      <div class="hero-overlay"></div>
+    </div>
+  
+    <div class="hero-content">
+      <h1 class="hero-title">
+        Find your <span class="hero-accent">perfect stay</span>
+      </h1>
+      <p class="hero-subtitle">Curated villas, zimmers &amp; apartments</p>
+  
+      <div class="search-bar" id="main-search-bar" (click)="$event.stopPropagation()">
+  
+        <div class="search-item" (click)="toggleSearchPanel('city', $event)">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+          <div class="search-field">
+            <label class="search-label">DESTINATION</label>
+            <span class="search-value" [class.placeholder]="!selectedCity">{{ selectedCity || 'Where are you going?' }}</span>
+          </div>
+          <div class="city-dropdown" [class.open]="activeSearchPanel === 'city'">
+            <div *ngFor="let group of cityGroups; let last = last">
+              <div class="city-group-label">{{ group.region }}</div>
+              <div class="city-item" *ngFor="let city of group.cities" (click)="selectCity(city.name, $event)" [class.active]="selectedCity === city.name">
+                <span class="city-icon">{{ city.icon }}</span>{{ city.name }}
+              </div>
+              <div class="city-divider" *ngIf="!last"></div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="search-divider"></div>
+  
+        <div class="search-item" (click)="toggleSearchPanel('dates', $event)">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect width="18" height="18" x="3" y="4" rx="2"/>
+            <line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/>
+          </svg>
+          <div class="search-field">
+            <label class="search-label">DATES</label>
+            <span class="search-value" [class.placeholder]="!datesLabel">{{ datesLabel || 'Check in — Check out' }}</span>
+          </div>
+          <div class="dates-panel" [class.open]="activeSearchPanel === 'dates'" (click)="$event.stopPropagation()">
+            <div class="date-row"><label>CHECK IN</label><input type="date" [(ngModel)]="checkIn" /></div>
+            <div class="date-row"><label>CHECK OUT</label><input type="date" [(ngModel)]="checkOut" /></div>
+            <button class="apply-btn" (click)="applyGuests($event)">Done</button>
+          </div>
+        </div>
+  
+        <div class="search-divider"></div>
+  
+        <div class="search-item" (click)="toggleSearchPanel('guests', $event)">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          <div class="search-field">
+            <label class="search-label">GUESTS</label>
+            <span class="search-value" [class.placeholder]="!guestsLabel">{{ guestsLabel || 'Add guests' }}</span>
+          </div>
+          <div class="guests-panel" [class.open]="activeSearchPanel === 'guests'" (click)="$event.stopPropagation()">
+            <div class="guest-row">
+              <div class="guest-label-wrap"><span class="guest-label">Adults</span><span class="guest-sub">Age 13+</span></div>
+              <div class="counter">
+                <button class="counter-btn" (click)="changeCount('adults', -1)">−</button>
+                <span class="counter-val">{{ adults }}</span>
+                <button class="counter-btn" (click)="changeCount('adults', 1)">+</button>
+              </div>
+            </div>
+            <div class="guest-row">
+              <div class="guest-label-wrap"><span class="guest-label">Children</span><span class="guest-sub">Age 2–12</span></div>
+              <div class="counter">
+                <button class="counter-btn" (click)="changeCount('children', -1)">−</button>
+                <span class="counter-val">{{ children }}</span>
+                <button class="counter-btn" (click)="changeCount('children', 1)">+</button>
+              </div>
+            </div>
+            <div class="guest-row">
+              <div class="guest-label-wrap"><span class="guest-label">Rooms</span></div>
+              <div class="counter">
+                <button class="counter-btn" (click)="changeCount('rooms', -1)">−</button>
+                <span class="counter-val">{{ rooms }}</span>
+                <button class="counter-btn" (click)="changeCount('rooms', 1)">+</button>
+              </div>
+            </div>
+            <button class="apply-btn" (click)="applyGuests($event)">Done</button>
+          </div>
+        </div>
+  
+        <button class="search-button" (click)="doSearch()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+          </svg>
+          Search
+        </button>
+      </div>
+      <div class="quick-filters">
+        <button class="quick-chip" (click)="selectQuickFilter('Near the Western Wall', $event)">🕍 Near the Kotel</button>
+        <button class="quick-chip" (click)="selectQuickFilter('Large Family Villa', $event)">🏡 Family Villas</button>
+        <button class="quick-chip" (click)="selectQuickFilter('Villa with Pool', $event)">🏊‍♂️ Villas with Pool</button>
+        <button class="quick-chip" (click)="selectQuickFilter('Zimmer in Nature', $event)">🌲 In Nature</button>
+      </div>
+    </div>
+</section>

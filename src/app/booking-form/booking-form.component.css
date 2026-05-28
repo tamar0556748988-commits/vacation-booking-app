@@ -1,0 +1,160 @@
+.booking-form-wrap {
+    background: white;
+    border-radius: 20px;
+    padding: 32px;
+    border: 1px solid #e2e8f0;
+    margin-top: 24px;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  /* ── Steps ── */
+  .steps {
+    display: flex;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+  
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .step-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  
+  .step.active .step-num { background: #00609a; color: white; }
+  .step.done .step-num   { background: #22c55e; color: white; }
+  
+  .step-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #94a3b8;
+  }
+  .step.active .step-label { color: #00609a; }
+  
+  .step-line {
+    flex: 1;
+    height: 2px;
+    background: #e2e8f0;
+    margin: 0 12px;
+  }
+  
+  /* ── Form ── */
+  .step-content h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 24px;
+  }
+  
+  .form-group {
+    margin-bottom: 16px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #64748b;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #1e293b;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+  }
+  
+  .form-group input:focus { border-color: #00609a; }
+  
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  
+  /* ── Inline field errors ── */
+  .field-error {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: #b91c1c;
+    margin-top: 5px;
+    font-weight: 500;
+  }
+  
+  .field-error i {
+    font-style: normal;
+    font-size: 11px;
+    opacity: 0.8;
+  }
+  
+  .input-error {
+    border-color: #fca5a5 !important;
+    background-color: #fff8f8;
+  }
+  
+  /* ── Actions ── */
+  .form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  
+  .btn-cancel {
+    flex: 1;
+    padding: 14px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    background: white;
+    color: #64748b;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-cancel:hover { border-color: #94a3b8; }
+  
+  .btn-next {
+    flex: 2;
+    padding: 14px;
+    background: #00609a;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-next:hover:not(:disabled) { background: #004d7a; }
+  .btn-next:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+    opacity: 0.8;
+  }
+  
+  /* ── Confirmation ── */
+  .confirmation { text-align: center; }
+  .success-icon { font-size: 48px; margin-bottom: 16px; }
+  .confirmation h3 { font-size: 24px; color: #166534; margin-bottom: 8px; }
+  .confirmation p  { color: #64748b; font-size: 15px; margin-bottom: 8px; }

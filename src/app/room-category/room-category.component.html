@@ -1,0 +1,46 @@
+<div class="category-page">
+
+    <div class="page-header">
+      <a class="back-link" routerLink="/home">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 5l-7 7 7 7"/>
+        </svg>
+        Back to Home
+      </a>
+      <h1>{{ categoryName || 'Properties' }}</h1>
+      <p *ngIf="!loading">{{ rooms.length }} properties found</p>
+    </div>
+  
+    <div class="loading" *ngIf="loading">
+      <div class="spinner"></div>
+      <p>Loading...</p>
+    </div>
+  
+    <div class="no-results" *ngIf="!loading && rooms.length === 0">
+      <h3>No properties found</h3>
+    </div>
+  
+    <div class="rooms-grid" *ngIf="!loading && rooms.length > 0">
+      <div class="room-card" *ngFor="let room of rooms" (click)="goToRoom(room._id)">
+        <div class="image-wrapper">
+            <img [src]="getImageUrl(room.images?.[0])" [alt]="room.name" (error)="onImgError($event)" />
+          <span class="tag" *ngIf="room.amenities?.[0]">{{ room.amenities[0] }}</span>
+        </div>
+        <div class="details">
+          <h3>{{ room.name }}</h3>
+          <p class="location">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+            {{ room.location?.city }}
+          </p>
+          <p class="description">{{ room.description | slice:0:80 }}...</p>
+          <div class="card-footer">
+            <div class="price"><span class="amount">₪{{ room.price }}</span> / night</div>
+            <span class="guests">👥 Up to {{ room.maxGuests }} guests</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </div>
